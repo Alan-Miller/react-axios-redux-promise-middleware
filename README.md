@@ -34,7 +34,7 @@ In this step, we will create our `store`. Since this tool will be hitting an API
 * `npm install --save redux-promise-middleware`.
 * Open `src/store.js`.
 * Import `createStore`, `applyMiddleware`, and `combineReducers` from `redux`.
-  * We'll be using two reducers in this project. One for the customer list and one for customer editting.
+  * We'll be using two reducers in this project. One for the customer list and one for customer editing.
   * Follow along in the detailed instructions if you are unfamiliar with `combineReducers`.
 * Import `promiseMiddleware` from `redux-promise-middleware`.
 * Import `listReducer` from `src/ducks/listReducer.js`.
@@ -1422,7 +1422,7 @@ Then we'll need to udpate the `save` method to call the `dispatchUpdateCustomer`
 ```js
 save() {
   dispatchUpdateCustomer( this.props.id, { [this.props.property]: this.state.val } );
-  this.setState({ editting: !this.state.editting });
+  this.setState({ editing: !this.state.editing });
 }
 ```
 
@@ -1466,7 +1466,7 @@ export default class ToggleEdit extends Component {
     super(props);
     this.state = {
       val: this.props.val,
-      editting: false
+      editing: false
     }
 
     this.handleChange = this.handleChange.bind( this );
@@ -1479,29 +1479,29 @@ export default class ToggleEdit extends Component {
   }
 
   toggle() {
-    this.setState({ editting: !this.state.editting, val: this.props.readOnlyVal })
+    this.setState({ editing: !this.state.editing, val: this.props.readOnlyVal })
   }
 
   save() {
     dispatchUpdateCustomer( this.props.id, { [this.props.property]: this.state.val } );
-    this.setState({ editting: !this.state.editting });
+    this.setState({ editing: !this.state.editing });
   }
 
   render() {
     const { description, multi } = this.props;
-    const { editting, val } = this.state;
+    const { editing, val } = this.state;
 
     return (
       <div className="CustomerToggleEdit__container">
         {
           multi
           ?
-            <textarea className="CustomerToggleEdit__textarea" disabled={ !editting } value={ val } onChange={ this.handleChange } />
+            <textarea className="CustomerToggleEdit__textarea" disabled={ !editing } value={ val } onChange={ this.handleChange } />
           :
-            <input className="CustomerToggleEdit__input" disabled={ !editting } placeholder={ description } value={ val } onChange={ this.handleChange } />  
+            <input className="CustomerToggleEdit__input" disabled={ !editing } placeholder={ description } value={ val } onChange={ this.handleChange } />  
         }
         {
-          editting
+          editing
           ?
             multi
             ?
@@ -1516,7 +1516,7 @@ export default class ToggleEdit extends Component {
               <button className="CustomerToggleEdit__editBtn" onClick={ this.toggle }>Edit</button>
         }
         {
-          editting
+          editing
           ?
             multi
             ?
